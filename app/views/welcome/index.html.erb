@@ -1,0 +1,30 @@
+<button><td><%= link_to 'Sort name', welcome_delit_path(:type => "name") %></td></button>
+<button><td><%= link_to 'Sort price', welcome_delit_path(:type => "price") %></td></button>
+<button><td><%= link_to 'Sort weight', welcome_delit_path(:type => "weigth") %></td></button>
+<button><td><%= link_to 'Sort shop', welcome_delit_path(:type => "shop_id") %></td></button>
+
+<div class="table-responsive">
+	<table class="table table-bordered">
+		<thead> 
+			<tr>
+			 <th>ID</th>
+			 <th>Image</th> 
+			 <th>Name</th> 
+			 <th>Price</th> 
+			 <th>Weight</th> 
+			</tr> 
+		</thead>
+		<tbody>
+<% @c.each do |i| %>
+<tr>
+<th scope="row"><span><%= Shop.find(i.shop_id).shop_name %></span></th>
+<% i.image_url = "http://sushihouse.by" + i.image_url if i.image_url[/\/upload\//]%>
+<td><img src="<%= i.image_url %>" style="width:220px;height:100px"></td>
+<td><span><%= i.name %></span></td>
+<td><span><%= i.price %></span></td>
+<td><span><%= i.weigth.to_s + " г" %></span></td>
+</tr> 
+<% end %>
+</tbody>
+	</table>
+<%= paginate @c %>

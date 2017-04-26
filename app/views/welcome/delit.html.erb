@@ -1,0 +1,32 @@
+  <%= select_tag "zopa", @cat.each{ |u| u,:action => welcome_delit_path(:category => u)}) %>
+<% @cat.each do |ds| %>
+<%= link_to "#{ds}", welcome_delit_path(:category => ds), class: 'btn btn-default' %>
+<% end %>
+<br>
+<br>
+
+<div class="table-responsive">
+	<table class="table table-bordered">
+		<thead> 
+			<tr>
+			 <th>Shop name <%= link_to "&dArr;".html_safe, welcome_delit_path(:type => "shop_id", :category => params[:category]), class: 'btn btn-default' %></th>
+			 <th>Image</th> 
+			 <th>Name <%= link_to "&dArr;".html_safe, welcome_delit_path(:type => "name", :category => params[:category]), class: 'btn btn-default' %></th> 
+			 <th>Price <%= link_to "&dArr;".html_safe, welcome_delit_path(:type => "price", :category => params[:category]), class: 'btn btn-default' %></th> 
+			 <th>Weight <%= link_to "&dArr;".html_safe, welcome_delit_path(:type => "weigth", :category => params[:category]), class: 'btn btn-default' %></th> 
+			</tr> 
+		</thead>
+		<tbody>
+<% @c.each do |i| %>
+<tr>
+<th scope="row"><span><%= Shop.find(i.shop_id).shop_name %></span></th>
+<% i.image_url = "http://sushihouse.by" + i.image_url if i.image_url[/\/upload\//]%>
+<td><img src="<%= i.image_url %>" style="width:220px;height:100px"></td>
+<td><span><%= i.name %></span></td>
+<td><span><%= i.price %></span></td>
+<td><span><%= i.weigth.to_s + " г" %></span></td>
+</tr> 
+<% end %>
+</tbody>
+	</table>
+<%= paginate @c %>
