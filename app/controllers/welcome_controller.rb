@@ -8,6 +8,10 @@ class WelcomeController < ApplicationController
   	@c = Kaminari.paginate_array(z).page(params[:page]).per(10)
   	#s = CSV.read("/home/rozen/parsing_items/Crawlers/ProSushi/prosushi.by.csv",{headers: true})
     #@s = s.headers 
+     respond_to do |format|
+      format.html {@c }
+      format.json {render json: @c, status: 200}
+    end
   end
 
   def delit()
@@ -16,6 +20,10 @@ class WelcomeController < ApplicationController
   	breadcr = params[:category] || @cat.join(", ").gsub(', ',"','")
   	type = params[:type] || "price"
   	@c = @a.select('products.*,shops.*').joins(:products).where("products.breadcrumb in ('#{breadcr}')").order("#{type} desc").page(params[:page]).per(10)
+    respond_to do |format|
+      format.html {@c }
+      format.json {render json: @c, status: 200}
+    end
   end
 
 

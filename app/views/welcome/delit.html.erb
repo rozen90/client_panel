@@ -1,4 +1,3 @@
-  <%= select_tag "zopa", @cat.each{ |u| u,:action => welcome_delit_path(:category => u)}) %>
 <% @cat.each do |ds| %>
 <%= link_to "#{ds}", welcome_delit_path(:category => ds), class: 'btn btn-default' %>
 <% end %>
