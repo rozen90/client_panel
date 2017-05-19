@@ -3,6 +3,16 @@
 <% end %>
 <br>
 <br>
+<%= form_tag(welcome_delit_path, method: "get") do %>
+  <%= label_tag(:q, "Choose category:") %>
+  <br>
+  <%= select_tag("category", options_for_select(@cat)) %>
+  <br>
+  <br>
+  <%= submit_tag("Confirm") %>
+<% end %>
+<br>
+<br>
 
 <div class="table-responsive">
 	<table class="table table-bordered">

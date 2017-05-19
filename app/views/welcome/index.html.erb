@@ -1,17 +1,24 @@
-<button><td><%= link_to 'Sort name', welcome_delit_path(:type => "name") %></td></button>
-<button><td><%= link_to 'Sort price', welcome_delit_path(:type => "price") %></td></button>
-<button><td><%= link_to 'Sort weight', welcome_delit_path(:type => "weigth") %></td></button>
-<button><td><%= link_to 'Sort shop', welcome_delit_path(:type => "shop_id") %></td></button>
+<%= form_tag(welcome_index_path, method: "get") do %>
+  <%= label_tag(:q, "Choose category:") %>
+  <br>
+  <%= select_tag("category", options_for_select(@cat)) %>
+  <br>
+  <br>
+  <%= submit_tag("Confirm") %>
+<% end %>
+<br>
+<br>
 
+<h1><%= @cat_name %></h1>
 <div class="table-responsive">
 	<table class="table table-bordered">
 		<thead> 
 			<tr>
-			 <th>ID</th>
+			 <th>Shop name <%= link_to "&dArr;".html_safe, welcome_index_path(:type => "shop_id", :category => params[:category]), class: 'btn btn-default' %></th>
 			 <th>Image</th> 
-			 <th>Name</th> 
-			 <th>Price</th> 
-			 <th>Weight</th> 
+			 <th>Name <%= link_to "&dArr;".html_safe, welcome_index_path(:type => "name", :category => params[:category]), class: 'btn btn-default' %></th> 
+			 <th>Price <%= link_to "&dArr;".html_safe, welcome_index_path(:type => "price", :category => params[:category]), class: 'btn btn-default' %></th> 
+			 <th>Weight <%= link_to "&dArr;".html_safe, welcome_index_path(:type => "weigth", :category => params[:category]), class: 'btn btn-default' %></th> 
 			</tr> 
 		</thead>
 		<tbody>
@@ -27,4 +34,4 @@
 <% end %>
 </tbody>
 	</table>
-<%= paginate @c %>
+<%= paginate @c unless @c.empty? %>
