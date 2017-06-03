@@ -1,28 +1,28 @@
+<% if model_signed_in? %>
 <%= form_tag(welcome_index_path, method: "get") do %>
   <%= label_tag(:q, "Choose category:") %>
   <br>
-  <%= select_tag("category", options_for_select(@cat)) %>
+  <%= select_tag("category", options_for_select(@categories)) %>
   <br>
   <br>
   <%= submit_tag("Confirm") %>
 <% end %>
 <br>
 <br>
-
-<h1><%= @cat_name %></h1>
+<h1><%= @category_name %></h1>
 <div class="table-responsive">
 	<table class="table table-bordered">
 		<thead> 
 			<tr>
 			 <th>Shop name <%= link_to "&dArr;".html_safe, welcome_index_path(:type => "shop_id", :category => params[:category]), class: 'btn btn-default' %></th>
 			 <th>Image</th> 
-			 <th>Name <%= link_to "&dArr;".html_safe, welcome_index_path(:type => "name", :category => params[:category]), class: 'btn btn-default' %></th> 
+			 <th>Name <%= link_to "&dArr;".html_safe, welcome_index_path(params.permit(:category).merge(type: "name")), class: 'btn btn-default' %></th>
 			 <th>Price <%= link_to "&dArr;".html_safe, welcome_index_path(:type => "price", :category => params[:category]), class: 'btn btn-default' %></th> 
 			 <th>Weight <%= link_to "&dArr;".html_safe, welcome_index_path(:type => "weigth", :category => params[:category]), class: 'btn btn-default' %></th> 
 			</tr> 
 		</thead>
 		<tbody>
-<% @c.each do |i| %>
+<% @products.each do |i| %>
 <tr>
 <th scope="row"><span><%= Shop.find(i.shop_id).shop_name %></span></th>
 <% i.image_url = "http://sushihouse.by" + i.image_url if i.image_url[/\/upload\//]%>
@@ -34,4 +34,6 @@
 <% end %>
 </tbody>
 	</table>
-<%= paginate @c unless @c.empty? %>
+<%= paginate @products unless @products.empty? %>
+  </div>
+<%	 end %>

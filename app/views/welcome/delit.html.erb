@@ -26,7 +26,7 @@
 			</tr> 
 		</thead>
 		<tbody>
-<% @c.each do |i| %>
+<% @products.each do |i| %>
 <tr>
 <th scope="row"><span><%= Shop.find(i.shop_id).shop_name %></span></th>
 <% i.image_url = "http://sushihouse.by" + i.image_url if i.image_url[/\/upload\//]%>
@@ -38,4 +38,4 @@
 <% end %>
 </tbody>
 	</table>
-<%= paginate @c %>
+<%= paginate @products %>

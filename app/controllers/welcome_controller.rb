@@ -1,19 +1,20 @@
 class WelcomeController < ApplicationController
 
   def index
-  	@a = current_model.shops rescue []
-    @cat = category.map {|ds| ds[:breadcrumb]}
-    breadcr = params[:category] || @cat.join(", ").gsub(', ',"','")
-    type = params[:type] || "price"
-    if @a.empty?
-      @c = []
-    else
-      @c = @a.select('products.*,shops.*').joins(:products).where("products.breadcrumb in ('#{breadcr}')").order("#{type} desc").page(params[:page]).per(10)
-    end
-    @cat_name = category_name
-    respond_to do |format|
-      format.html {@c }
-      format.json {render json: @c, status: 200}
+    if current_model
+      shops = current_model.shops
+      @categories = category
+      sort_by_category = params[:category] || @categories
+      type = params[:type] || "price"
+      if shops.empty?
+        @products = []
+      else
+        @products = shops.select('products.*,shops.*').joins(:products)
+                                               .where(products: {breadcrumb: sort_by_category})
+                                               .merge(Product.order("#{type}": :desc))
+                                               .page(params[:page]).per(10)
+      end
+      @category_name = category_name
     end
   end
 
@@ -21,6 +22,7 @@ class WelcomeController < ApplicationController
 
   def category()
   	cat = Product.select("distinct(products.breadcrumb)")
+    cat.map {|val| val[:breadcrumb]}
   end
 
   def category_name()
