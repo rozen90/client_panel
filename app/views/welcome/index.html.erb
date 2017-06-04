@@ -12,14 +12,14 @@
 <h1><%= @category_name %></h1>
 <div class="table-responsive">
 	<table class="table table-bordered">
-		<thead> 
+		<thead>
 			<tr>
 			 <th>Shop name <%= link_to "&dArr;".html_safe, welcome_index_path(:type => "shop_id", :category => params[:category]), class: 'btn btn-default' %></th>
-			 <th>Image</th> 
+			 <th>Image</th>
 			 <th>Name <%= link_to "&dArr;".html_safe, welcome_index_path(params.permit(:category).merge(type: "name")), class: 'btn btn-default' %></th>
-			 <th>Price <%= link_to "&dArr;".html_safe, welcome_index_path(:type => "price", :category => params[:category]), class: 'btn btn-default' %></th> 
-			 <th>Weight <%= link_to "&dArr;".html_safe, welcome_index_path(:type => "weigth", :category => params[:category]), class: 'btn btn-default' %></th> 
-			</tr> 
+			 <th>Price <%= link_to "&dArr;".html_safe, welcome_index_path(:type => "price", :category => params[:category]), class: 'btn btn-default' %></th>
+			 <th>Weight <%= link_to "&dArr;".html_safe, welcome_index_path(:type => "weigth", :category => params[:category]), class: 'btn btn-default' %></th>
+			</tr>
 		</thead>
 		<tbody>
 <% @products.each do |i| %>
@@ -30,10 +30,10 @@
 <td><span><%= i.name %></span></td>
 <td><span><%= i.price %></span></td>
 <td><span><%= i.weigth.to_s + " г" %></span></td>
-</tr> 
+</tr>
 <% end %>
 </tbody>
 	</table>
-<%= paginate @products unless @products.empty? %>
   </div>
 <%	 end %>
+<%= paginate @products unless @products.empty? %>

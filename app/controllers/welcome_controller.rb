@@ -2,14 +2,14 @@ class WelcomeController < ApplicationController
 
   def index
     if current_model
-      shops = current_model.shops
+      stores = current_model.shops
       @categories = category
       sort_by_category = params[:category] || @categories
       type = params[:type] || "price"
-      if shops.empty?
+      if stores.empty?
         @products = []
       else
-        @products = shops.select('products.*,shops.*').joins(:products)
+        @products = stores.select('shops.*,products.*').joins(:products)
                                                .where(products: {breadcrumb: sort_by_category})
                                                .merge(Product.order("#{type}": :desc))
                                                .page(params[:page]).per(10)
